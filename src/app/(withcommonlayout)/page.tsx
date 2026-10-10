@@ -1,6 +1,7 @@
 import About from '@/components/pages/home/About';
 import Benefits from '@/components/pages/home/Benefits';
 import BestSelles from '@/components/pages/home/BestSelles';
+import Campaign from '@/components/pages/home/Campaign';
 import Category from '@/components/pages/home/Category';
 import Hero from '@/components/pages/home/Hero';
 import NewProducts from '@/components/pages/home/NewProducts';
@@ -15,6 +16,7 @@ const page = () => {
             <BestSelles/>
             <About/>
             <NewProducts/>
+            <Campaign/>
         </div>
     );
 };

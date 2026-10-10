@@ -1,5 +1,5 @@
 import c1 from "@/assets/category/cat1.webp"
-import c2 from "@/assets/category/cat2.png"
+import c2 from "@/assets/category/cat2.avif"
 import c3 from "@/assets/category/cat3.jpg"
 
 export const categories =[

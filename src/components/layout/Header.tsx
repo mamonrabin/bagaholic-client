@@ -51,7 +51,7 @@ export default function Header() {
 
   return (
     <header
-      className={`site-container sticky top-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur-sm transition-all duration-300 ${
+      className={`site-container sticky top-0 z-[999] border-b border-neutral-200 bg-white/95 backdrop-blur-sm transition-all duration-300 ${
         isScrolled ? "py-0 border-primary/10" : "py-4 border-primary/10"
       }`}
     >
@@ -87,7 +87,9 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`group relative font-sans text-xs font-bold uppercase tracking-wide transition-all duration-300 ${
+                className={`group relative font-sans ${
+                  isScrolled ? "text-xs font-medium" : "text-xs font-bold"
+                }   uppercase tracking-wide transition-all duration-300 ${
                   active ? "text-primary" : "text-foreground hover:text-primary"
                 }`}
               >
@@ -96,7 +98,7 @@ export default function Header() {
                 <span
                   className={`absolute ${
                     isScrolled ? "-bottom-1" : "-bottom-3"
-                  }  left-0 h-[2px] bg-primary transition-all duration-300 ${
+                  }  left-0 h-[2px] bg-primary  transition-all duration-300 ${
                     active
                       ? "w-full"
                       : "w-full opacity-0 group-hover:opacity-100"
@@ -108,12 +110,12 @@ export default function Header() {
         </nav>
 
         {/* Header Actions */}
-        <div className="flex items-center md:gap-4">
+        <div className="flex items-center md:gap-2 text-primary">
           {/* Account */}
           <Link
             href="/my-account"
             aria-label="My account"
-            className="flex h-10 w-10 items-center justify-center text-neutral-800 transition-colors hover:text-primary"
+            className="flex h-10 w-10 items-center justify-center transition-colors hover:text-primary"
           >
             <User size={isScrolled ? 19 : 21} strokeWidth={1.6} />
           </Link>
@@ -122,7 +124,7 @@ export default function Header() {
           <Link
             href="/cart"
             aria-label="View shopping cart"
-            className="relative flex h-10 w-10 items-center justify-center text-neutral-800 transition-colors hover:text-primary"
+            className="relative flex h-10 w-10 items-center justify-center transition-colors hover:text-primary"
           >
             <ShoppingBag size={isScrolled ? 19 : 21} strokeWidth={1.6} />
 
@@ -148,7 +150,7 @@ export default function Header() {
             aria-label={
               mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"
             }
-            className="flex h-10 w-10 items-center justify-center text-neutral-800 transition-colors hover:text-primary lg:hidden"
+            className="flex h-10 w-10 items-center justify-center transition-colors hover:text-primary lg:hidden"
           >
             {mobileMenuOpen ? (
               <X size={isScrolled ? 21 : 23} strokeWidth={1.7} />

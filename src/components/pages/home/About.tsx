@@ -1,4 +1,4 @@
-import sideImage from "@/assets/category/cat2.png";
+import sideImage from "@/assets/category/cat2.avif";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,7 +7,7 @@ const About = () => {
     <div className="bg-[#FFF9F6]">
       <div className="grid lg:grid-cols-2 gap-4 bg-[#FBF1F2]">
         <div>
-          <Image src={sideImage} alt="image" width={800} height={800} className="h-full" />
+          <Image src={sideImage} alt="image" width={800} height={800} className="h-full w-full" />
         </div>
         <div className="md:py-20 py-12 md:px-20 px-4">
           <p className="mb-5 flex items-center gap-3 font-sans md:text-xs text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
