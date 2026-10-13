@@ -1,5 +1,6 @@
 import { productes } from "@/api/products";
 import ProductCard from "@/components/cards/ProductCard";
+import Link from "next/link";
 import React from "react";
 
 const BestSelles = () => {
@@ -14,9 +15,11 @@ const BestSelles = () => {
         <h1 className="font-heading md:text-[40px] text-3xl font-bold">
           Bestsellers, beautifully chosen.
         </h1>
+       <Link href="/best-sellers">
         <p className="text-primary/80 hover:text-primary md:flex hidden duration-300 cursor-pointer font-bold text-sm">
           View best sellers <span className="ml-1">→</span>
         </p>
+       </Link>
       </div>
 
       <div className="md:mt-10 mt-6 grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">

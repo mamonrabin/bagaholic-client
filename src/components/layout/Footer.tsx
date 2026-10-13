@@ -10,9 +10,9 @@ import { FaFacebookF, FaInstagram } from "react-icons/fa";
 const shopLinks = [
   { label: "New Arrivals", href: "/new-arrivals/" },
   { label: "Best Sellers", href: "/best-sellers/" },
-  { label: "Top Handle Bags", href: "/product-category/top-handle-bags/" },
-  { label: "Shoulder Bags", href: "/product-category/shoulder-bags/" },
-  { label: "Sale", href: "/sale/" },
+  { label: "Top Handle Bags", href: "/shop" },
+  { label: "Shoulder Bags", href: "/shop" },
+  { label: "Sale", href: "/shop" },
 ];
 
 const customerCareLinks = [
@@ -25,10 +25,10 @@ const customerCareLinks = [
 
 const aboutLinks = [
   { label: "Our Story", href: "/about/" },
-  { label: "Quality Promise", href: "/quality-promise/" },
-  { label: "Material Guide", href: "/material-guide/" },
-  { label: "Bag Care", href: "/bag-care-guide/" },
-  { label: "Reviews", href: "/reviews/" },
+  { label: "Quality Promise", href: "/about" },
+  { label: "Material Guide", href: "/about" },
+  { label: "Bag Care", href: "/about" },
+  { label: "Reviews", href: "/about" },
 ];
 
 const legalLinks = [
@@ -73,7 +73,7 @@ function FooterMenu({
 
 export default function Footer() {
   return (
-    <footer className="bg-[#FBF1F2] text-white">
+    <footer className="bg-[#FFFAF7] text-white">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         {/* Main footer */}
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1.15fr_1fr] lg:gap-10 lg:py-16">
@@ -108,7 +108,7 @@ export default function Footer() {
               aria-label="Bagaholic social media"
             >
               <a
-                href="https://www.facebook.com/thebagaholicshop"
+                href="https://www.facebook.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Bagaholic on Facebook"
@@ -118,7 +118,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://www.instagram.com/bagaholicbd/"
+                href="https://www.instagram.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Bagaholic on Instagram"
@@ -165,12 +165,12 @@ export default function Footer() {
           <p className="whitespace-nowrap text-xs text-neutral-500">
             Designed and developed by{" "}
             <a
-              href="https://www.faarmout.com/?utm_source=bagaholic&utm_medium=referral&utm_campaign=footer_credit&utm_content=designed_and_developed_by"
+              href="https://titaswebs.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium text-neutral-800 transition-colors hover:text-neutral-950"
             >
-              faarmout
+              titaswebs
             </a>
           </p>
         </div>

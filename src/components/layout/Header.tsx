@@ -1,12 +1,14 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, ShoppingBag, User, X } from "lucide-react";
+import { Menu, User, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import logo from "@/assets/logo/logo.png";
+import CartSidebar from "../pages/cart/CartSidebar";
 
 const navItems = [
   { name: "Home", href: "/" },
@@ -19,7 +21,7 @@ const navItems = [
 
 const mobileItems = [
   ...navItems,
-  { name: "Sale", href: "/sale" },
+  { name: "Sale", href: "/shop" },
   { name: "Track Order", href: "/track-order" },
 ];
 
@@ -29,17 +31,46 @@ export default function Header() {
 
   const pathname = usePathname();
 
+  // Handle header scroll styling.
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  // Prevent background scrolling while the mobile menu is open.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [mobileMenuOpen]);
+
+  // Close the menu when navigating to another page.
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   const isActive = (href: string) => {
     if (href === "/") {
@@ -50,126 +81,119 @@ export default function Header() {
   };
 
   return (
-    <header
-      className={`site-container sticky top-0 z-[999] border-b border-neutral-200 bg-white/95 backdrop-blur-sm transition-all duration-300 ${
-        isScrolled ? "py-0 border-primary/10" : "py-4 border-primary/10"
-      }`}
-    >
-      <div className="flex items-center justify-between">
-        {/* Logo */}
-        <Link
-          href="/"
-          aria-label="Bagaholic home"
-          className={`block transition-all duration-300 ${
-            isScrolled ? "w-28 md:w-32" : "w-40 md:w-44"
-          }`}
-        >
-          <Image
-            src={logo}
-            alt="Bagaholic, Carry Your Essence"
-            width={300}
-            height={300}
-            priority
-            className="w-full object-cover"
-          />
-        </Link>
+    <>
+      <header
+        className={`site-container sticky top-0 z-[1000] border-b border-primary/10 bg-white/95 backdrop-blur-sm transition-all duration-300 ${
+          isScrolled ? "py-0" : "py-4"
+        }`}
+      >
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link
+            href="/"
+            aria-label="Bagaholic home"
+            className={`block transition-all duration-300 ${
+              isScrolled ? "w-28 md:w-32" : "w-40 md:w-44"
+            }`}
+          >
+            <Image
+              src={logo}
+              alt="Bagaholic, Carry Your Essence"
+              width={300}
+              height={300}
+              priority
+              className="w-full object-cover"
+            />
+          </Link>
 
-        {/* Desktop Navigation */}
-        <nav
-          className="hidden items-center gap-7 lg:flex"
-          aria-label="Primary navigation"
-        >
-          {navItems.map((item) => {
-            const active = isActive(item.href);
+          {/* Desktop Navigation */}
+          <nav
+            className="hidden items-center gap-7 lg:flex"
+            aria-label="Primary navigation"
+          >
+            {navItems.map((item) => {
+              const active = isActive(item.href);
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={active ? "page" : undefined}
-                className={`group relative font-sans ${
-                  isScrolled ? "text-xs font-medium" : "text-xs font-bold"
-                }   uppercase tracking-wide transition-all duration-300 ${
-                  active ? "text-primary" : "text-foreground hover:text-primary"
-                }`}
-              >
-                {item.name}
-
-                <span
-                  className={`absolute ${
-                    isScrolled ? "-bottom-1" : "-bottom-3"
-                  }  left-0 h-[2px] bg-primary  transition-all duration-300 ${
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`group relative font-sans text-xs uppercase tracking-wide transition-all duration-300 ${
+                    isScrolled ? "font-medium" : "font-bold"
+                  } ${
                     active
-                      ? "w-full"
-                      : "w-full opacity-0 group-hover:opacity-100"
+                      ? "text-primary"
+                      : "text-foreground hover:text-primary"
                   }`}
-                />
-              </Link>
-            );
-          })}
-        </nav>
+                >
+                  {item.name}
 
-        {/* Header Actions */}
-        <div className="flex items-center md:gap-2 text-primary">
-          {/* Account */}
-          <Link
-            href="/my-account"
-            aria-label="My account"
-            className="flex h-10 w-10 items-center justify-center transition-colors hover:text-primary"
-          >
-            <User size={isScrolled ? 19 : 21} strokeWidth={1.6} />
-          </Link>
+                  <span
+                    className={`absolute left-0 h-[2px] bg-primary transition-all duration-300 ${
+                      isScrolled ? "-bottom-1" : "-bottom-3"
+                    } ${
+                      active
+                        ? "w-full"
+                        : "w-full opacity-0 group-hover:opacity-100"
+                    }`}
+                  />
+                </Link>
+              );
+            })}
+          </nav>
 
-          {/* Cart */}
-          <Link
-            href="/cart"
-            aria-label="View shopping cart"
-            className="relative flex h-10 w-10 items-center justify-center transition-colors hover:text-primary"
-          >
-            <ShoppingBag size={isScrolled ? 19 : 21} strokeWidth={1.6} />
-
-            <span
-              className={`absolute flex items-center justify-center rounded-full bg-primary px-1 font-semibold leading-none text-white transition-all duration-300 ${
-                isScrolled
-                  ? "right-1 top-1 h-3.5 min-w-3.5 text-[9px]"
-                  : "right-0.5 top-0.5 h-4 min-w-4 text-[10px]"
-              }`}
-              aria-live="polite"
-              aria-label="0 items in cart"
+          {/* Header Actions */}
+          <div className="flex items-center text-primary md:gap-2">
+            {/* Account */}
+            <Link
+              href="/login"
+              aria-label="My account"
+              className="flex h-10 w-10 items-center justify-center transition-colors hover:text-primary"
             >
-              0
-            </span>
-          </Link>
+              <User size={isScrolled ? 19 : 21} strokeWidth={1.6} />
+            </Link>
 
-          {/* Mobile Menu */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-controls="mobile-menu"
-            aria-expanded={mobileMenuOpen}
-            aria-label={
-              mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"
-            }
-            className="flex h-10 w-10 items-center justify-center transition-colors hover:text-primary lg:hidden"
-          >
-            {mobileMenuOpen ? (
-              <X size={isScrolled ? 21 : 23} strokeWidth={1.7} />
-            ) : (
-              <Menu size={isScrolled ? 21 : 23} strokeWidth={1.7} />
-            )}
-          </button>
+            {/* Cart */}
+            <CartSidebar isScrolled={isScrolled} />
+
+            {/* Mobile Menu Toggle */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen((open) => !open)}
+              aria-controls="mobile-menu"
+              aria-expanded={mobileMenuOpen}
+              aria-label={
+                mobileMenuOpen
+                  ? "Close navigation menu"
+                  : "Open navigation menu"
+              }
+              className="flex h-10 w-10 items-center justify-center transition-colors hover:text-primary lg:hidden"
+            >
+              {mobileMenuOpen ? (
+                <X size={isScrolled ? 21 : 23} strokeWidth={1.7} />
+              ) : (
+                <Menu size={isScrolled ? 21 : 23} strokeWidth={1.7} />
+              )}
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - viewport height below the header */}
       <div
         id="mobile-menu"
-        className={`overflow-hidden border-t border-neutral-100 bg-white transition-all duration-300 lg:hidden ${
-          mobileMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+        aria-hidden={!mobileMenuOpen}
+        className={`fixed inset-x-0 bottom-0 z-[999] overflow-x-hidden overflow-y-auto overscroll-contain border-t border-neutral-100 bg-white transition-all duration-300 lg:hidden ${
+          isScrolled ? "top-[40px]" : "top-[100px]"
+        } ${
+          mobileMenuOpen
+            ? "visible translate-y-0 opacity-100"
+            : "invisible pointer-events-none -translate-y-2 opacity-0"
         }`}
       >
         <nav
-          className="mx-auto flex max-w-7xl flex-col px-5 py-3"
+          className="mx-auto flex min-h-full max-w-7xl flex-col px-5 py-3"
           aria-label="Mobile navigation"
         >
           {mobileItems.map((item) => {
@@ -181,7 +205,8 @@ export default function Header() {
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
                 aria-current={active ? "page" : undefined}
-                className={`border-b border-neutral-100 py-3.5 font-sans text-sm font-medium uppercase tracking-wide transition-colors last:border-0 ${
+                tabIndex={mobileMenuOpen ? 0 : -1}
+                className={`border-b border-neutral-100 py-4 font-sans text-sm font-medium uppercase tracking-wide transition-colors last:border-0 ${
                   active
                     ? "text-primary"
                     : "text-neutral-700 hover:text-primary"
@@ -193,6 +218,6 @@ export default function Header() {
           })}
         </nav>
       </div>
-    </header>
+    </>
   );
 }

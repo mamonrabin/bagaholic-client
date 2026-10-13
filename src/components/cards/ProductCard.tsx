@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const ProductCard = ({ product }: any) => {
@@ -9,7 +10,7 @@ const ProductCard = ({ product }: any) => {
         className="border border-primary/18 bg-white cursor-pointer rounded-sm p-4 group-hover:-translate-y-2  group-hover:shadow-[0_6px_20px_-16px_var(--color-primary)]
                 transition-all duration-300"
       >
-        <div>
+        <Link href={`/products/${product.id}`}>
           <Image
             src={product.image}
             alt="image"
@@ -17,10 +18,12 @@ const ProductCard = ({ product }: any) => {
             height={300}
             className="rounded-sm group-hover:scale-105 duration-300"
           />
-        </div>
+        </Link>
 
         <div className="pt-4">
-          <p className="text-sm font-bold line-clamp-2">{product.title}</p>
+          <Link href={`/products/${product.id}`}>
+            <p className="text-sm font-bold line-clamp-2">{product.title}</p>
+          </Link>
 
           <p className="flex items-center gap-2 mt-2">
             <span className="md:text-base text-sm font-bold text-primary">

@@ -22,7 +22,7 @@ const Category = () => {
 
       <div className="grid lg:grid-cols-3 gap-4 mt-10">
         {
-            categories.map(category => <CategoryCard key={category.id} category={category}/>)
+            categories.slice(0,3).map(category => <CategoryCard key={category.id} category={category}/>)
         }
       </div>
     </div>

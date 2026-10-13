@@ -24,4 +24,12 @@ export const categories =[
         "title":"Easy elegance on the move",
         "image":c3
     },
+
+    {
+        "id":4,
+        "category":"Just Arrivals",
+        "subTitle":"New Arrivals",
+        "title":"The newest additions to the collection.",
+        "image":c1
+    },
 ]
